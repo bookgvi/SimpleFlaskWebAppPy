@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <form name="auth" submit="/login" method="post">
+            <div class="form-group">
+                <label for="username">
+                    <input id="username" type="text" name="username" value="" class="form-control">
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="pass">
+                    <input type="text" name="password" value="" class="form-control" id="pass">
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Log in</button>
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    const BASE_URL = 'http://127.0.0.1:5000'
+    const HTTP_STATUS = {
+        OK: 200
+    }
+
+    function login(event) {
+        event.preventDefault()
+        const username = document.auth.username.value
+        const password = document.auth.password.value
+        const body = { username, password }
+        return new Promise(resolve => {
+            const xhr = new XMLHttpRequest()
+            console.log(BASE_URL)
+            xhr.open('POST', `${BASE_URL}/login`)
+            xhr.responseType = 'json'
+            xhr.addEventListener('load', () => {
+                if (xhr.status === HTTP_STATUS.OK && xhr.readyState === 4) {
+                    resolve(xhr.response)
+                }
+            })
+            xhr.addEventListener('error', () => {
+                resolve(xhr.statusText)
+            })
+            xhr.send(JSON.stringify(body))
+        })
+    }
+</script>
+</html>
