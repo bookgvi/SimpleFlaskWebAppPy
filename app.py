@@ -1,8 +1,9 @@
 from flask import Flask
 from flask import flash, request, session, render_template
+import os
 
 app = Flask(__name__)
-
+app.secret_key = os.urandom(256)
 
 @app.route('/', methods=['GET'])
 def main_page():
@@ -14,11 +15,11 @@ def main_page():
 
 @app.route('/login', methods=['POST'])
 def login():
-    if request.form['username'] == 'admin' and request.form['password'] == 'pa$$w0rD':
+    if request.form['username'] == 'asd' and request.form['password'] == 'asd':
         session['logged_in'] = True
     else:
-        flash('Incorrect authentication')
-        return main_page()
+        flash(u'Incorrect authentication', 'error')
+    return main_page()
 
 
 @app.route('/logout', methods=['GET'])
