@@ -42,7 +42,6 @@ def hello(user):
     response = app.make_response('<h1>Hello, %s</h1>' % user)
     response.status_code = http_statuses.NOT_AUTHORITATIVE
     response.set_cookie('authorization', '666')
-    response.headers['Authorization'] = 'Bearer %s' % os.urandom(512)
     return response
 
 
